@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deckofcards"
+description = "Various card games."
+readme = "README.md"
+version = "0.1.0"
+authors = [
+    {name = "Sam Thorold"},
+    {email = "sam.thorold@gmail.com"}
+]
+maintainers = [
+    {name = "Sam Thorold"},
+    {email = "sam.thorold@gmail.com"}
+]
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+repository = "https://github.com/samthorold/deck-of-cards-python"
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "pytest-cov",
+    "tox",
+    "black",
+    "mypy",
+    "snakeviz",
+    "twine",
+]
+
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+pythonpath = [
+    "src"
+]
+
+[tool.coverage.run]
+parallel = true
+source = ["card_games"]
+
+[tool.coverage.paths]
+source = ["src", ".tox/*/site-packages"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "class .*\\bProtocol\\):"
+]

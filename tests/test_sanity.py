@@ -1,4 +1,4 @@
-from main import Card, Deck, Face, Suite
+from card_games.deck import Card, Deck, Face, Suite
 
 
 def test_sanity():
