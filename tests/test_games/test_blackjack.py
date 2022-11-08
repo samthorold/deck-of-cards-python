@@ -1,7 +1,7 @@
 import pytest
 
-from card_games.deck import Card, Face, Suite
-from card_games.games.blackjack.blackjack import Hand
+from card_games.deck import Card, Face, Suite, MultiDeck
+from card_games.games.blackjack.blackjack import card_values, Hand, Game, RandomPlayer
 
 
 @pytest.mark.parametrize(
@@ -29,3 +29,43 @@ from card_games.games.blackjack.blackjack import Hand
 )
 def test_hand_values(hand: Hand, value: list[int]):
     assert hand.values == value
+
+
+def test_all_face_values_have_a_numeric_value():
+    for face in Face:
+        card_values(Card(Suite.HEART, face))
+
+
+def test_unknown_face_value():
+    with pytest.raises(ValueError):
+        card_values(Card(Suite.HEART, "barnacles"))
+
+
+def test_game():
+    # Player 1 > House
+    deck = MultiDeck(4, seed=2)
+    deck.shuffle()
+    players = [RandomPlayer("Player 1", seed=5)]
+    game = Game(players, deck, seed=1)
+    game.game_turn()
+
+    # Both bust
+    deck = MultiDeck(4, seed=1)
+    deck.shuffle()
+    players = [RandomPlayer("Player 1", seed=5)]
+    game = Game(players, deck, seed=1)
+    game.game_turn()
+
+    # House > Player 1
+    deck = MultiDeck(4, seed=1)
+    deck.shuffle()
+    players = [RandomPlayer("Player 1", seed=1)]
+    game = Game(players, deck, seed=1)
+    game.game_turn()
+
+    # House bust
+    deck = MultiDeck(4, seed=10)
+    deck.shuffle()
+    players = [RandomPlayer("Player 1", seed=1)]
+    game = Game(players, deck, seed=1)
+    game.game_turn()

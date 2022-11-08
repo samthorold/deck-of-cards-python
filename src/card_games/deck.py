@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum, auto
 import random
+from typing import Protocol
 
 
 class Suite(Enum):
@@ -34,6 +35,14 @@ class Card:
 
 class EmptyDeck(Exception):
     """Empty deck Exception."""
+
+
+class DeckInterface(Protocol):
+    def shuffle(self) -> None:
+        ...
+
+    def draw(self) -> Card:
+        ...
 
 
 class Deck:
