@@ -1,7 +1,14 @@
 import pytest
 
 from card_games.deck import Card, Face, Suite, MultiDeck
-from card_games.games.blackjack.blackjack import card_values, Hand, Game, RandomPlayer
+from card_games.games.blackjack.blackjack import (
+    House,
+    PlayerInterface,
+    card_values,
+    Hand,
+    Game,
+    RandomPlayer,
+)
 
 
 @pytest.mark.parametrize(
@@ -27,21 +34,16 @@ from card_games.games.blackjack.blackjack import card_values, Hand, Game, Random
         ),
     ),
 )
-def test_hand_values(hand: Hand, value: list[int]):
+def test_hand_values(hand: Hand, value: list[int]) -> None:
     assert hand.values == value
 
 
-def test_all_face_values_have_a_numeric_value():
+def test_all_face_values_have_a_numeric_value() -> None:
     for face in Face:
         card_values(Card(Suite.HEART, face))
 
 
-def test_unknown_face_value():
-    with pytest.raises(ValueError):
-        card_values(Card(Suite.HEART, "barnacles"))
-
-
-def test_game():
+def test_game() -> None:
     # Player 1 > House
     deck = MultiDeck(4, seed=2)
     deck.shuffle()

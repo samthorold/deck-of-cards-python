@@ -24,17 +24,6 @@ classifiers = [
 [project.urls]
 repository = "https://github.com/samthorold/deck-of-cards-python"
 
-[project.optional-dependencies]
-dev = [
-    "build",
-    "pytest-cov",
-    "tox",
-    "black",
-    "mypy",
-    "snakeviz",
-    "twine",
-]
-
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules"

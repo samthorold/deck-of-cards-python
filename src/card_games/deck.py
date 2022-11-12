@@ -38,6 +38,9 @@ class EmptyDeck(Exception):
 
 
 class DeckInterface(Protocol):
+    def __len__(self) -> int:
+        ...
+
     def shuffle(self) -> None:
         ...
 
@@ -58,7 +61,7 @@ class Deck:
     def __len__(self) -> int:
         return len(self.available)
 
-    def shuffle(self):
+    def shuffle(self) -> None:
         self.random.shuffle(self.available)
 
     def draw(self) -> Card:
@@ -74,10 +77,10 @@ class MultiDeck:
     def __init__(self, n: int, seed: int | None = None):
         self.decks = [Deck(seed=seed) for _ in range(n)]
 
-    def __len__(self):
+    def __len__(self) -> int:
         return sum(len(deck) for deck in self.decks)
 
-    def shuffle(self):
+    def shuffle(self) -> None:
         for deck in self.decks:
             deck.shuffle()
 

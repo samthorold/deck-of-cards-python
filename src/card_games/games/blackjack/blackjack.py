@@ -12,46 +12,37 @@ A player's turn may involve 1+ draws and they are either free to "stick" or
 
 import itertools
 import random
-from typing import Protocol
+from typing import Protocol, Sequence
 
 from card_games.deck import Card, DeckInterface, Face, MultiDeck
 
 
+FACE_VALUES = {
+    Face.TWO: [2],
+    Face.THREE: [3],
+    Face.FOUR: [4],
+    Face.FIVE: [5],
+    Face.SIX: [6],
+    Face.SEVEN: [7],
+    Face.EIGHT: [8],
+    Face.NINE: [9],
+    Face.TEN: [10],
+    Face.JACK: [10],
+    Face.QUEEN: [10],
+    Face.KING: [10],
+    Face.ACE: [1, 11],
+}
+
+
 def card_values(card: Card) -> list[int]:
-    if card.face == Face.TWO:
-        return [2]
-    if card.face == Face.THREE:
-        return [3]
-    if card.face == Face.FOUR:
-        return [4]
-    if card.face == Face.FIVE:
-        return [5]
-    if card.face == Face.SIX:
-        return [6]
-    if card.face == Face.SEVEN:
-        return [7]
-    if card.face == Face.EIGHT:
-        return [8]
-    if card.face == Face.NINE:
-        return [9]
-    if card.face == Face.TEN:
-        return [10]
-    if card.face == Face.JACK:
-        return [10]
-    if card.face == Face.QUEEN:
-        return [10]
-    if card.face == Face.KING:
-        return [10]
-    if card.face == Face.ACE:
-        return [1, 11]
-    raise ValueError(f"Unknown card face value {card.face}")
+    return FACE_VALUES[card.face]
 
 
 class Hand:
     def __init__(self, cards: list[Card] | None = None):
         self.cards: list[Card] = [] if cards is None else cards
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.cards)
 
     @property
@@ -114,12 +105,12 @@ class RandomPlayer(AbstractPlayer):
 class Game:
     def __init__(
         self,
-        players: list[PlayerInterface],
+        players: Sequence[PlayerInterface],
         deck: DeckInterface | None = None,
         seed: int | None = None,
     ):
         self.house = House("House")
-        self.players = players
+        self.players = list(players)
         self.in_play = [p for p in self.players]
         self.deck = MultiDeck(4, seed) if deck is None else deck
 
