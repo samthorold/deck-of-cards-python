@@ -14,7 +14,7 @@ import itertools
 import random
 from typing import Protocol, Sequence
 
-from card_games.deck import Card, DeckInterface, Face, MultiDeck
+from card_games.deck import Card, Deck, DeckInterface, Face
 
 
 FACE_VALUES = {
@@ -89,19 +89,6 @@ class House(AbstractPlayer):
         return False
 
 
-class RandomPlayer(AbstractPlayer):
-    def __init__(self, name: str, hand: Hand | None = None, seed: int | None = None):
-        super().__init__(name=name, hand=hand)
-        self.random = random.Random(seed)
-
-    def action(self, deck: DeckInterface) -> bool:
-        """Take first card then 50/50 chance of stick or twist."""
-        if not len(self.hand) or self.random.randint(0, 1):
-            self.hand.add(deck.draw())
-            return True
-        return False
-
-
 class Game:
     def __init__(
         self,
@@ -112,7 +99,7 @@ class Game:
         self.house = House("House")
         self.players = list(players)
         self.in_play = [p for p in self.players]
-        self.deck = MultiDeck(4, seed) if deck is None else deck
+        self.deck = Deck(seed=seed, n=4) if deck is None else deck
 
     def is_bust(self, player: PlayerInterface) -> bool:
         if all(v > 21 for v in player.hand.values):

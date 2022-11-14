@@ -49,14 +49,16 @@ class DeckInterface(Protocol):
 
 
 class Deck:
-    def __init__(self, seed: int | None = None):
+    def __init__(self, seed: int | None = None, n: int = 1):
         self.seed = seed
+        self.n = n
         self.random = random.Random(seed)
         self.available: list[Card] = []
         self.used: list[Card] = []
-        for suite in Suite:
-            for face in Face:
-                self.available.append(Card(suite=suite, face=face))
+        for _ in range(n):
+            for suite in Suite:
+                for face in Face:
+                    self.available.append(Card(suite=suite, face=face))
 
     def __len__(self) -> int:
         return len(self.available)
@@ -71,21 +73,3 @@ class Deck:
         self.available.remove(card)
         self.used.append(card)
         return card
-
-
-class MultiDeck:
-    def __init__(self, n: int, seed: int | None = None):
-        self.decks = [Deck(seed=seed) for _ in range(n)]
-
-    def __len__(self) -> int:
-        return sum(len(deck) for deck in self.decks)
-
-    def shuffle(self) -> None:
-        for deck in self.decks:
-            deck.shuffle()
-
-    def draw(self) -> Card:
-        for deck in self.decks:
-            if len(deck):
-                return deck.draw()
-        raise EmptyDeck
