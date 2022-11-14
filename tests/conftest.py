@@ -1,7 +1,7 @@
 import pytest
 
 from card_games.deck import Card, DeckInterface, Face, Suite
-from card_games.games.blackjack.blackjack import AbstractPlayer
+from card_games.games.blackjack import AbstractPlayer
 
 
 class TensDeck:

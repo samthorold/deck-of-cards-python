@@ -1,3 +1,5 @@
 black
+mkdocstrings[python]
+mkdocs-material
 mypy
 pytest-cov
