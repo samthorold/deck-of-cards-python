@@ -1,7 +1,7 @@
 import pytest
 
 from card_games.deck import Card, Face, Suite
-from card_games.games.blackjack.blackjack import card_values, Hand
+from card_games.games.blackjack import card_values, Hand
 
 
 @pytest.mark.parametrize(

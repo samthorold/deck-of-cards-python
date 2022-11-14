@@ -1,0 +1,17 @@
+site_name: Deck of Cards
+
+watch:
+  - src
+
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+
+nav:
+  - Overview: index.md

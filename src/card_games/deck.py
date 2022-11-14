@@ -1,3 +1,5 @@
+"""Classic deck."""
+
 from dataclasses import dataclass
 from enum import Enum, auto
 import random
@@ -5,6 +7,8 @@ from typing import Protocol
 
 
 class Suite(Enum):
+    """Card suite."""
+
     CLUB = auto()
     DIAMOND = auto()
     HEART = auto()
@@ -12,6 +16,8 @@ class Suite(Enum):
 
 
 class Face(Enum):
+    """Card face."""
+
     TWO = auto()
     THREE = auto()
     FOUR = auto()
@@ -29,6 +35,13 @@ class Face(Enum):
 
 @dataclass(frozen=True)
 class Card:
+    """Card from a classic deck.
+
+    Attributes:
+        suite: Card suite; Club, Diamond, Heart, or Spade.
+        face: Card face.
+    """
+
     suite: Suite
     face: Face
 
@@ -49,6 +62,20 @@ class DeckInterface(Protocol):
 
 
 class Deck:
+    """Classic deck of cards.
+
+    Examples:
+        >>> deck = Deck(seed=1)
+        >>> deck.shuffle()
+        >>> deck.draw()
+        Card(suite=<Suite.SPADE: 4>, face=<Face.QUEEN: 11>)
+
+    Attributes:
+        seed (int): Random seed.
+        n (int): Number of decks to include.
+
+    """
+
     def __init__(self, seed: int | None = None, n: int = 1):
         self.seed = seed
         self.n = n
@@ -67,6 +94,14 @@ class Deck:
         self.random.shuffle(self.available)
 
     def draw(self) -> Card:
+        """Draw a [card][card_games.deck.Card].
+
+        Returns:
+            card: Single [Card][card_games.deck.Card] object.
+
+        Raises:
+            EmptyDeck: If there are no cards left, raise and error.
+        """
         if not len(self):
             raise EmptyDeck
         card = self.available[0]

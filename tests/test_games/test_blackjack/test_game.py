@@ -1,5 +1,5 @@
 from card_games.deck import DeckInterface
-from card_games.games.blackjack.blackjack import PlayerInterface, Game
+from card_games.games.blackjack import PlayerInterface, Game
 
 
 def test_game_player_bust(

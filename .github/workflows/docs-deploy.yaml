@@ -1,0 +1,33 @@
+---
+name: Deploy docs
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  FORCE_COLOR: "1"
+  TOX_TESTENV_PASSENV: FORCE_COLOR
+  PYTHON_LATEST: "3.11"
+
+
+jobs:
+  docs:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{env.PYTHON_LATEST}}
+
+      - name: "Install dependencies"
+        run: |
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install -r requirements/dev.txt
+      - name: "Deploy docs"
+        run: "python -m mkdocs gh-deploy --force"  # https://squidfunk.github.io/mkdocs-material/publishing-your-site/
