@@ -38,8 +38,8 @@ class Card:
     """Card from a classic deck.
 
     Attributes:
-        suite: Card suite; Club, Diamond, Heart, or Spade.
-        face: Card face.
+        suite (Suite): Card suite; Club, Diamond, Heart, or Spade.
+        face (Face): Card face.
     """
 
     suite: Suite

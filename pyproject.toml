@@ -21,6 +21,11 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "mkdocstrings[python]"
+]
+
 [project.urls]
 repository = "https://github.com/samthorold/deck-of-cards-python"
 
